@@ -1,20 +1,24 @@
-# AEUX 1.0.2
+# AEUX 1.0.3
 
 ![AEUX Figma and After Effects panels](assets/aeux-panels.png)
 
-[中文](#中文) · [English](#english) · [Download / 下载](https://github.com/dreamstring/AEUX/releases/tag/v1.0.2)
+[中文](#中文) · [English](#english) · [Download / 下载](https://github.com/dreamstring/AEUX/releases/tag/v1.0.3)
 
 Maintained by [Dring Qian / dreamstring](https://github.com/dreamstring), based on [AEUX by Adam Plouff and upstream contributors](https://github.com/google/AEUX). Independent community fork; not an official Google or Adobe product. Apache 2.0.
 
 ## 中文
 
-将 Figma 图层传入 After Effects，尽量保留可编辑的文字、形状、图片和层级。1.0.2 以当前认可的修复版本为基础，后续继续增加兼容性。
+将 Figma 图层传入 After Effects，尽量保留可编辑的文字、形状、图片和层级。1.0.3 以当前认可的修复版本为基础，后续继续增加兼容性。
+
+### 1.0.3 新增
+
+单一图片填充、统一样式且无描边和效果的文字，可导入为可编辑文字 Alpha 遮罩＋独立纹理层，不增加预合成。已验证 TILE 240% 样例。纹理覆盖原文字框，编辑后超出原框不会自动扩展；复杂外观仍使用原有回退。
 
 ### 相对旧版的改进
 
 下表针对本次排查中发现的旧版问题，不代表旧版完全不具备这些功能。
 
-| 场景 | 旧版遇到的问题 | 1.0.2 |
+| 场景 | 旧版遇到的问题 | 1.0.3 |
 | --- | --- | --- |
 | 多层嵌套 Frame / Group | 部分图层位置、图片边界不正确 | 修正矩阵与坐标空间处理，改善嵌套定位 |
 | Auto Layout 与适配后的布局 | 部分嵌套布局转换偏移 | 按 Figma 当前已计算的位置导入；不是在 AE 中重建响应式布局系统 |
@@ -30,7 +34,7 @@ Maintained by [Dring Qian / dreamstring](https://github.com/dreamstring), based 
 
 ### 安装 CEP（Windows）
 
-1. 下载本页 Release 的 **AEUX-1.0.2.zip** 并解压。先保存工程并退出 AE。
+1. 下载本页 Release 的 **AEUX-1.0.3.zip** 并解压。先保存工程并退出 AE。
 2. 备份并移走现有 AEUX 扩展文件夹，避免重复加载同名扩展。
 3. 在资源管理器地址栏粘贴：
 
@@ -61,13 +65,16 @@ CEP 的 **Image save path** 可选择导入图片的落盘目录。勾选 **工�
 
 ## English
 
-Transfer Figma layers to After Effects while retaining editable text, shapes, images and hierarchy where supported. Version 1.0.2 establishes the currently accepted repair baseline.
+New in 1.0.3: uniform text with one image fill and no visible strokes or effects imports as editable native text used as an Alpha matte for a separate texture layer, without an extra precomp. Validated with TILE 240%. Texture coverage stays within the original text frame; edits outside it do not automatically extend the texture. Complex appearances retain the existing fallback.
+
+
+Transfer Figma layers to After Effects while retaining editable text, shapes, images and hierarchy where supported. Version 1.0.3 establishes the currently accepted repair baseline.
 
 ### Improvements over the original workflow
 
 The original already supported these broad features; this fork fixes specific conversion failures rather than claiming they were entirely absent.
 
-| Area | Improvements in 1.0.2 |
+| Area | Improvements in 1.0.3 |
 | --- | --- |
 | Nested frames and groups | Matrix-based placement and more accurate raster bounds |
 | Auto Layout / resized designs | Import Figma's resolved layout positions; does not recreate responsive layout behavior in AE |
@@ -83,7 +90,7 @@ Editable layers are preferred. Clipping, masks and isolation can require precomp
 
 ### Windows CEP installation
 
-1. Download **AEUX-1.0.2.zip** from [Releases](https://github.com/dreamstring/AEUX/releases/tag/v1.0.2). Extract it, save your project and quit AE.
+1. Download **AEUX-1.0.3.zip** from [Releases](https://github.com/dreamstring/AEUX/releases/tag/v1.0.3). Extract it, save your project and quit AE.
 2. Back up and move any previous AEUX extension outside CEP extension directories.
 3. Paste **%CommonProgramFiles(x86)%\Adobe\CEP\extensions** into File Explorer. Create it if necessary. Copy the complete **CEP/AEUX** directory there. The resulting file must be **%CommonProgramFiles(x86)%\Adobe\CEP\extensions\AEUX\CSXS\manifest.xml**.
 Copying to this system-wide directory may require administrator permission.
@@ -96,9 +103,9 @@ Open the AEUX panel in AE, select **New Comp** or **Current**, then select a fra
 
 ## Development / 开发
 
-统一离线构建与打包：Node.js 22（推荐 22.3.0），运行 npm run build。无需启动 Figma／AE，也无需安装构建依赖。npm run check 执行回归测试、1.0.2 全文件字节对照和两次 ZIP 可复现检查。详见 [BUILD.md](BUILD.md)。
+统一离线构建与打包：Node.js 22（推荐 22.3.0），运行 npm run build。无需启动 Figma／AE，也无需安装构建依赖。npm run check 执行回归测试、1.0.3 全文件字节对照和两次 ZIP 可复现检查。详见 [BUILD.md](BUILD.md)。
 
-Build the paired package offline with Node.js 22 (22.3.0 recommended): npm run build. No Figma, AE or dependency installation is required. Run npm run check for regression tests, complete 1.0.2 file parity and repeated ZIP reproducibility. See [BUILD.md](BUILD.md).
+Build the paired package offline with Node.js 22 (22.3.0 recommended): npm run build. No Figma, AE or dependency installation is required. Run npm run check for regression tests, complete 1.0.3 file parity and repeated ZIP reproducibility. See [BUILD.md](BUILD.md).
 
 The legacy compiled frontend and pinned runtime dependencies are vendored inputs; repair modules and the AE host are regenerated from maintained source. This is reproducible runtime assembly, not yet a full recompilation of every legacy Vue/TypeScript frontend module. Tested desktop workflows focus on Windows AE 23.5 and Figma 126.10.7; other host versions require testing.
 

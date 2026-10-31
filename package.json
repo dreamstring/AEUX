@@ -1,13 +1,15 @@
 {
   "name": "aeux",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Transfer Figma layers to editable After Effects layers",
   "main": "index.js",
   "scripts": {
-    "test": "node tests/core/check-geometry.cjs && node tests/core/check-appearance.cjs && node tests/core/check-typography.cjs && node tests/core/check-null-raster-bounds.cjs && node tests/core/check-container-transform.cjs && node tests/build/check-archive.cjs",
+    "test": "node tests/core/check-geometry.cjs && node tests/core/check-appearance.cjs && node tests/core/check-typography.cjs && node tests/core/check-null-raster-bounds.cjs && node tests/core/check-container-transform.cjs && node tests/build/check-archive.cjs && node tests/core/check-image-text.cjs",
     "build": "node scripts/build.cjs",
+    "build:image-text": "node scripts/build-image-text.cjs",
+    "test:image-text": "node tests/core/check-image-text.cjs",
     "package": "node scripts/build.cjs",
-    "verify:baseline": "node scripts/build.cjs --verify",
+    "verify:baseline": "node scripts/build.cjs --verify --frozen",
     "verify:repro": "node scripts/verify-repro.cjs",
     "check": "npm test && npm run verify:baseline && npm run verify:repro"
   },

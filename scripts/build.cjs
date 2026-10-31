@@ -55,7 +55,30 @@ const extra=Object.keys(actual).filter(f=>!baseline.files[f]);
 const report={version,baseline:'1.0.2',generated,matched:Object.keys(actual).length-changed.length,files:Object.keys(actual).length,changed,extra,byteIdentical:changed.length===0&&extra.length===0,liveAppsUsed:false};
 fs.writeFileSync(path.join(run,'verification.json'),JSON.stringify(report,null,2)+'\n');
 if(process.argv.includes('--verify')&&!report.byteIdentical)throw Error('Baseline mismatch: '+changed.join(', ')+'; extra: '+extra.join(', ')+'; report '+path.join(run,'verification.json'));
-const zip=path.join(run,'AEUX-'+version+'.zip');makeZip(tree,zip);report.zipSha256=sha(fs.readFileSync(zip));
+let releaseTree=tree;
+if(!process.argv.includes('--frozen')){
+ const {patchImageTextUi,patchImageTextCode,patchImageTextHost}=require('./image-text-feature.cjs');
+ for(const name of ['Figma/dist/ui.js','Figma/dist/ui.html']){
+  const p=path.join(tree,name);let source=patchImageTextUi(fs.readFileSync(p,'utf8'));
+  if(name.endsWith('.html'))source+='\n<script>'+read('packages/figma-export/image-text-preflight.js')+'</script>';
+  fs.writeFileSync(p,source);
+ }
+ const code=path.join(tree,'Figma/dist/code.js');fs.writeFileSync(code,patchImageTextCode(fs.readFileSync(code,'utf8')));
+ const hostFile=path.join(tree,hostPath);fs.writeFileSync(hostFile,patchImageTextHost(fs.readFileSync(hostFile,'utf8')));
+ // Update runtime identity and paired package metadata without touching the frozen dependency.
+ for(const file of files(tree)){
+  if(/\.(?:js|jsx|html|json|xml|md|txt)$/i.test(file)){
+   const source=fs.readFileSync(file,'utf8');if(source.includes('1.0.2'))fs.writeFileSync(file,source.replaceAll('1.0.2',version));
+  }
+ }
+ releaseTree=path.join(run,'AEUX-'+version);if(releaseTree!==tree)fs.renameSync(tree,releaseTree);
+ for(const name of ['Figma/dist/ui.js','Figma/dist/code.js','CEP/AEUX/dist/js/app.aeux-pp3.js'])new vm.Script(fs.readFileSync(path.join(releaseTree,name),'utf8'),{filename:name});
+ report.features=['image-text-v1'];report.byteIdentical=false;
+ fs.copyFileSync(path.join(root,'README.md'),path.join(releaseTree,'README.md'));
+ const checksums=files(releaseTree).filter(file=>path.basename(file)!=='FILES.sha256');
+ fs.writeFileSync(path.join(releaseTree,'FILES.sha256'),checksums.map(file=>sha(fs.readFileSync(file))+'  '+path.relative(releaseTree,file).replaceAll('\\','/')).join('\n')+'\n');
+}
+const zip=path.join(run,'AEUX-'+(process.argv.includes('--frozen')?'1.0.2':version)+'.zip');makeZip(releaseTree,zip);report.zipSha256=sha(fs.readFileSync(zip));
 fs.writeFileSync(path.join(run,'verification.json'),JSON.stringify(report,null,2)+'\n');
-fs.writeFileSync(path.join(root,'dist/latest.json'),JSON.stringify({directory:run,tree,zip,...report},null,2)+'\n');
+fs.writeFileSync(path.join(root,'dist/latest.json'),JSON.stringify({directory:run,tree:releaseTree,zip,...report},null,2)+'\n');
 console.log(JSON.stringify({output:zip,files:report.files,generated:generated.length,byteIdentical:report.byteIdentical,zipSha256:report.zipSha256}));

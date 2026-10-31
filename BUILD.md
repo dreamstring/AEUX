@@ -12,7 +12,7 @@ npm run verify:baseline
 npm run verify:repro
 ```
 
-- `build`：生成配套 Figma 与 CEP 目录、ZIP，以及 `dist/latest.json`。
+- `build`：生成当前版本的配套 Figma 与 CEP 目录、ZIP，以及 `dist/latest.json`。
 - `verify:baseline`：从仓库源码生成修复代码，逐文件比较冻结的 1.0.2。任何新增、
   缺失、字节差异都会失败；不自动修改基准。
 - `verify:repro`：独立构建两次，ZIP 哈希必须相同；再解压 ZIP 验证全部文件。
@@ -52,7 +52,10 @@ PowerShell, network connection, Figma or AE is required by the maintained build.
 `npm run build` assembles the paired package. `npm run verify:baseline` requires
 all output files to match the frozen accepted 1.0.2 byte for byte.
 `npm run verify:repro` builds twice, compares ZIP hashes, and checks an extracted
-ZIP against the complete baseline. `npm run check` runs all checks together.
+ZIP against the first current-version build. `npm run check` runs all checks together.
+
+The frozen baseline check uses `--frozen`; it deliberately excludes post-1.0.2
+features. Ordinary builds apply maintained feature modules after that checkpoint.
 
 Read `dist/latest.json` for output paths. Packaging uses sorted paths, fixed ZIP
 timestamps and fixed compression settings. ZIP hashes are reproducible with the

@@ -6,7 +6,7 @@ function build(){const result=cp.spawnSync(process.execPath,[path.join(__dirname
 const first=build(),second=build();
 if(first.zipSha256!==second.zipSha256)throw Error('Two builds produced different archives');
 const dir=fs.mkdtempSync(path.join(root,'dist/zip-verification-'));extractZip(second.zip,dir);
-const tree=path.join(dir,'AEUX-1.0.2'),baseline=require('../tests/baseline/1.0.2.json');
-const actual=files(tree);if(actual.length!==Object.keys(baseline.files).length)throw Error('Packaged file count mismatch');
-for(const file of actual){const name=path.relative(tree,file).replaceAll('\\','/');if(sha(fs.readFileSync(file))!==baseline.files[name])throw Error('Archive roundtrip mismatch: '+name);}
+const tree=path.join(dir,path.basename(second.tree));
+const actual=files(tree);if(actual.length!==files(first.tree).length)throw Error('Packaged file count mismatch');
+for(const file of actual){const name=path.relative(tree,file);if(sha(fs.readFileSync(file))!==sha(fs.readFileSync(path.join(first.tree,name))))throw Error('Archive roundtrip mismatch: '+name);}
 console.log(JSON.stringify({reproducible:true,zipSha256:first.zipSha256,packagedFiles:actual.length,liveAppsUsed:false}));
