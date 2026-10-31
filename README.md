@@ -1,21 +1,38 @@
-[<img src="https://google.github.io/AEUX/AEUX_Panels.png" width="50%">](https://google.github.io/AEUX/)
+# AEUX — Figma to After Effects
 
-# [AEUX](https://google.github.io/AEUX/)
+Community-maintained by [Dring Qian (dreamstring)](https://github.com/dreamstring),
+based on [AEUX by Adam Plouff](https://github.com/google/AEUX).
+Independent fork; not an official Google or Adobe product.
 
-Built on the original [After Effects][56a59ddd] layer transfer system, Sketch2AE, AEUX now supports Catalina updates to [Sketch][66b609ab] and browser based [Figma](https://figma.com). UX motion design in Ae has never been easier to get started.   
+**1.0 is under development. This branch is not a finished release.**
+See [GOAL.md](GOAL.md) for migration and acceptance status.
 
-> This is not an official Google product. Motion designers at Google just kinda like it a lot. Built by [Adam Plouff][8638464d].
+## Direction
 
-  [8638464d]: http://www.battleaxe.co/ "Battle Axe"
-  [66b609ab]: https://www.sketchapp.com/ "Sketch App"
-  [56a59ddd]: http://www.adobe.com/products/aftereffects.html "After Effects"
-  [changelog]: https://aeux.io/guide/changelog.html "Change Log"
+Transfer designs into editable AE layers. Keep text, shapes and images editable.
+Use precomps where clipping, masks or isolation require them. Sketch is outside
+this fork's scope. Avoid large arithmetic blend helper graphs by default.
 
-Installation and usage at: https://aeux.io
+## Repairs being migrated
 
----
+- Matrix positioning for rotation, flips and nested frames.
+- Raster export bounds, crop metadata and oversized images.
+- Text placement, tracking and mixed appearance handling.
+- Zero opacity, blur calibration and shadow distance safeguards.
+- Mask scopes, clipping and rounded corners.
+- Export progress and actionable errors.
 
-## [Change log][changelog]
+This list describes migration scope, not completed 1.0 guarantees. Fonts, complex
+text paints, background blur and combined fill/stroke blending need regression
+checks. Raster fallbacks must be explicit; editable output is the default.
 
-## License
-Apache 2.0
+## Development
+
+Run npm test for portable geometry, opacity/blur and typography contracts.
+Desktop import acceptance and paired packaging are still pending.
+
+## License and credits
+
+Original AEUX: Adam Plouff and upstream contributors. Maintenance and new fixes:
+Dring Qian (dreamstring). [Apache 2.0](LICENSE.md). Original source notices remain.
+Historical upstream documentation may describe unsupported installation paths.
