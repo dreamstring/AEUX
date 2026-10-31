@@ -1,44 +1,112 @@
-# AEUX — Figma to After Effects
+# AEUX 1.0.0
 
-![AEUX 1.0.0 Figma plugin and After Effects panel](assets/aeux-panels.png)
+![AEUX Figma and After Effects panels](assets/aeux-panels.png)
 
-Community-maintained by [Dring Qian (dreamstring)](https://github.com/dreamstring),
-based on [AEUX by Adam Plouff](https://github.com/google/AEUX).
-Independent fork; not an official Google or Adobe product.
+[中文](#中文) · [English](#english) · [Download / 下载](https://github.com/dreamstring/AEUX/releases/tag/v1.0.0)
 
-**Current version: 1.0.0.**
-The current accepted feature set is the 1.0.0 baseline. Additional features and
-compatibility improvements will follow in later versions.
+Maintained by [Dring Qian / dreamstring](https://github.com/dreamstring), based on AEUX by Adam Plouff and upstream contributors. Independent community fork; not an official Google or Adobe product. Apache 2.0.
 
-## Direction
+## 中文
 
-Transfer designs into editable AE layers. Keep text, shapes and images editable.
-Use precomps where clipping, masks or isolation require them. Sketch is outside
-this fork's scope. Avoid large arithmetic blend helper graphs by default.
+将 Figma 图层传入 After Effects，尽量保留可编辑的文字、形状、图片和层级。1.0.0 以当前认可的修复版本为基础，后续继续增加兼容性。
 
-## 1.0.0 repair scope
+### 相对旧版的改进
 
-- Matrix positioning for rotation, flips and nested frames.
-- Raster export bounds, crop metadata and oversized images.
-- Text placement, tracking and mixed appearance handling.
-- Zero opacity, blur calibration and shadow distance safeguards.
-- Mask scopes, clipping and rounded corners.
-- Export progress and actionable errors.
+下表针对本次排查中发现的旧版问题，不代表旧版完全不具备这些功能。
 
-Fonts, complex text paints, background blur and combined fill/stroke blending
-remain areas for further compatibility testing. Raster fallbacks must be
-explicit; editable output is the default.
+| 场景 | 旧版遇到的问题 | 1.0.0 |
+| --- | --- | --- |
+| 多层嵌套 Frame / Group | 部分图层位置、图片边界不正确 | 修正矩阵与坐标空间处理，改善嵌套定位 |
+| Auto Layout 与适配后的布局 | 部分嵌套布局转换偏移 | 按 Figma 当前已计算的位置导入；不是在 AE 中重建响应式布局系统 |
+| 旋转、水平 / 垂直翻转 | 中心和方向可能错误 | 改善完整矩阵和翻转处理 |
+| 图片与超大图片 | 裁切、尺寸不匹配或导出失败 | 增加边界元数据及大图处理；仍受宿主尺寸和内存限制 |
+| 文字 | 部分位置、字距、复杂填充导致异常 | 修正定位与字距，必要时使用外观回退 |
+| 模糊、阴影、透明度 | 数值转换不一致；翻转阴影可能报负值错误 | 调整转换并保留 0 透明度，修复阴影距离问题 |
+| 蒙版、裁剪、圆角 | 部分作用域或嵌套结果异常 | 改善作用域、Frame 裁剪与圆角处理 |
+| 资源输出目录 | 原有自定义图片目录 | 保留目录选择，增加工程位置选项：AEP 所在目录下的 Source/AEUX |
+| 发送反馈 | 大图、复杂图层失败时难判断 | 增加进度与错误提示 |
 
-## Development
+**编辑性与限制：** 支持的文字和形状优先保持可编辑。裁剪、蒙版及隔离可能需要预合成，复杂文字外观可能按图导出。并非任意深度、任意 Figma 效果都保证完全一致；字体替换、背景模糊及部分填充 / 描边混合模式仍可能存在差异。默认不包含实验性的柔光运算辅助层方案。
 
-Run npm test for portable geometry, opacity/blur and typography contracts.
-Repository source synchronization and reproducible paired packaging are tracked
-in [GOAL.md](GOAL.md). The Figma/AE application directories have not yet been
-synchronized with the locally accepted 1.0.0 package; downloading this repository
-is not currently a substitute for that package.
+### 安装 CEP（Windows）
 
-## License and credits
+1. 下载本页 Release 的 **AEUX-1.0.0.zip** 并解压。先保存工程并退出 AE。
+2. 备份并移走现有 AEUX 扩展文件夹，避免重复加载同名扩展。
+3. 在资源管理器地址栏粘贴：
 
-Original AEUX: Adam Plouff and upstream contributors. Maintenance and new fixes:
-Dring Qian (dreamstring). [Apache 2.0](LICENSE.md). Original source notices remain.
-Historical upstream documentation may describe unsupported installation paths.
+   ~~~text
+   %APPDATA%\Adobe\CEP\extensions
+   ~~~
+
+   目录不存在时新建。把压缩包中的 **CEP/AEUX** 整个文件夹复制进去。最终应是：
+
+   ~~~text
+   %APPDATA%\Adobe\CEP\extensions\AEUX\CSXS\manifest.xml
+   ~~~
+
+   也可使用系统目录（通常需要管理员权限）：
+
+   ~~~text
+   %CommonProgramFiles(x86)%\Adobe\CEP\extensions
+   ~~~
+
+4. 这是未签名的 CEP 文件夹发行版。如果面板不出现，按照 [Adobe 的调试说明](https://github.com/Adobe-CEP/Getting-Started-guides/blob/master/Client-side%20Debugging/readme.md)，为 AE 使用的 CSXS 版本启用 PlayerDebugMode。注册表位置为 HKCU\Software\Adobe\CSXS.<版本>，字符串值 PlayerDebugMode = 1。CSXS 版本不是 AE 年份，不要直接照年份填写。
+5. 启动 AE，在 **窗口 → 扩展（旧版）/ 扩展 → AEUX** 打开。按需启用 AE 首选项中“允许脚本写入文件和访问网络”。
+
+### 导入 Figma 插件
+
+1. 把解压后的 **Figma** 文件夹放在固定位置，不要删除里面的 dist 文件夹。
+2. 在 Figma 桌面端打开 Design 文件，选择 **Plugins → Development → Import plugin from manifest…**（插件 → 开发 → 从 manifest 导入）。
+3. 选择 **Figma/manifest.json**，然后从 **Plugins → Development → AEUX** 运行。
+4. 更新时保留相同文件夹路径，关闭后重新运行插件；必要时重新导入 manifest。
+
+### 使用
+
+先打开 AE 的 AEUX 面板，设置 **New Comp**（新合成）或 **Current**（当前合成）。在 Figma 选择要发送的 Frame，再点 **Send selection to Ae**。
+
+CEP 的 **Image save path** 可选择导入图片的落盘目录。勾选 **工程位置（AEP/Source/AEUX）** 时，请先保存 AEP；图片放到该工程目录下的 Source/AEUX。这是素材目录，不是修改 AEP 保存路径。保留素材文件，移动工程时一并移动。尽量关闭 **Precomp groups** 以减少普通分组的预合成；必要的裁剪 / 蒙版结构仍会保留。
+
+## English
+
+Transfer Figma layers to After Effects while retaining editable text, shapes, images and hierarchy where supported. Version 1.0.0 establishes the currently accepted repair baseline.
+
+### Improvements over the original workflow
+
+The original already supported these broad features; this fork fixes specific conversion failures rather than claiming they were entirely absent.
+
+| Area | Improvements in 1.0.0 |
+| --- | --- |
+| Nested frames and groups | Matrix-based placement and more accurate raster bounds |
+| Auto Layout / resized designs | Import Figma's resolved layout positions; does not recreate responsive layout behavior in AE |
+| Rotation and reflection | Corrected center and flip handling |
+| Raster assets | Bounds metadata, crop handling and oversized-image handling within host limits |
+| Text | Placement, tracking and complex-appearance fallback handling |
+| Appearance | Blur conversion, shadow-distance safeguards and zero-opacity preservation |
+| Masks and clipping | Improved scope, frame clipping and rounded corners |
+| Asset directory | Custom image directory plus project-relative Source/AEUX option |
+| Feedback | Export progress and actionable failure messages |
+
+Editable layers are preferred. Clipping, masks and isolation can require precomps; some text appearances require raster fallback. Arbitrary nesting and every Figma effect are not guaranteed pixel-identical. Fonts, background blur and some combined fill/stroke blends can differ. Experimental Soft Light arithmetic helper graphs are excluded by default.
+
+### Windows CEP installation
+
+1. Download **AEUX-1.0.0.zip** from [Releases](https://github.com/dreamstring/AEUX/releases/tag/v1.0.0). Extract it, save your project and quit AE.
+2. Back up and move any previous AEUX extension outside CEP extension directories.
+3. Paste **%APPDATA%\Adobe\CEP\extensions** into File Explorer. Create it if necessary. Copy the complete **CEP/AEUX** directory there. The resulting file must be **%APPDATA%\Adobe\CEP\extensions\AEUX\CSXS\manifest.xml**.
+4. Alternative system-wide directory: **%CommonProgramFiles(x86)%\Adobe\CEP\extensions** (administrator permission usually required). Use only one installation location.
+5. This is an unsigned folder distribution. If hidden, enable PlayerDebugMode for the CSXS runtime used by your AE version, following [Adobe's instructions](https://github.com/Adobe-CEP/Getting-Started-guides/blob/master/Client-side%20Debugging/readme.md). Do not confuse CSXS runtime numbers with AE release years.
+6. Start AE and open **Window → Extensions (Legacy) / Extensions → AEUX**. Enable script file/network access in AE preferences if required.
+
+### Figma installation and use
+
+Keep the extracted **Figma** directory in a permanent location, including dist. In Figma desktop, open a Design file, choose **Plugins → Development → Import plugin from manifest…**, and select **Figma/manifest.json**. Run **Development → AEUX**. This follows the [official Figma sample-plugin workflow](https://github.com/figma/plugin-samples).
+
+Open the AEUX panel in AE, select **New Comp** or **Current**, then select a frame in Figma and click **Send selection to Ae**. Set **Image save path** for exported image assets, or enable **工程位置 (AEP/Source/AEUX)** to store assets under the saved AEP's directory. Save the AEP first. This setting controls image assets, not the AEP save location. Keep those assets with the project. Disable **Precomp groups** to reduce optional group precomps; necessary clipping/mask structures remain.
+
+## Development / 开发
+
+The downloadable release contains the paired runtime package. Repository app-source synchronization and fully reproducible source builds remain tracked in [GOAL.md](GOAL.md); GitHub's automatic “Source code” download is not the installable plugin package. Run npm test for portable core contracts. Desktop validation has focused on Windows AE 23.5 and Figma 126.10.7; other host versions require testing.
+
+## License / 许可证
+
+[Apache 2.0](LICENSE.md). Original AEUX: Adam Plouff and upstream contributors. Maintenance and repairs: Dring Qian (dreamstring). Third-party runtime dependencies retain their own licenses.

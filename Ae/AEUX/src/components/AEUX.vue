@@ -151,9 +151,7 @@
                 @click.alt.native="openConfig">
                 Learn stuff
             </Button>
-            <Panel-Info name uppercase version>
-                <i>Brought to you by your friends at Google motion design</i>
-            </Panel-Info>
+            <div style="font-size:11px;opacity:.55;padding:12px 0">v1.0.0</div>
         </Fold>
         <Footer :footerMessage.sync="footerMessage" />
     </Wrapper>
