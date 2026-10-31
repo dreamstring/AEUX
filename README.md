@@ -1,5 +1,7 @@
 # AEUX — Figma to After Effects
 
+![AEUX 1.0.0 Figma plugin and After Effects panel](assets/aeux-panels.png)
+
 Community-maintained by [Dring Qian (dreamstring)](https://github.com/dreamstring),
 based on [AEUX by Adam Plouff](https://github.com/google/AEUX).
 Independent fork; not an official Google or Adobe product.
