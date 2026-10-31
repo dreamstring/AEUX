@@ -1,4 +1,4 @@
-# AEUX 1.0 maintenance goal
+# AEUX maintenance roadmap
 
 Maintainer: [Dring Qian / dreamstring](https://github.com/dreamstring).
 Based on google/AEUX commit 573d07d. Preserve Apache 2.0 and original credits.
@@ -15,6 +15,9 @@ Based on google/AEUX commit 573d07d. Preserve Apache 2.0 and original credits.
 - [ ] Package paired distributables and scan for private data and machine paths.
 
 Do not modify installed CEP or operate AE while the maintainer uses it.
-This migration is not yet a usable 1.0 release. Font substitution and Overlay
-fill/stroke edges remain regression cases. Private test results do not establish
-universal compatibility.
+The maintainer has designated the currently accepted local feature set as 1.0.0.
+The unchecked items above track repository synchronization, packaging and future
+maintenance; they do not prevent that version designation. The repository app
+sources are not yet synchronized with the accepted local package.
+Font substitution and Overlay fill/stroke edges remain regression cases. Private
+test results do not establish universal compatibility.
