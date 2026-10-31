@@ -8,3 +8,9 @@ Prefer shared conversion functions over layer-name workarounds. Keep editable
 output as the default and explain additional precomps or raster fallbacks.
 Run npm test. Desktop integration changes also need paired Figma/CEP acceptance
 and recursive hierarchy inspection. Preserve Apache 2.0 and upstream notices.
+
+## Commit messages
+
+Use Conventional Commits: feat: for features, fix: for bug fixes, docs: for
+documentation, refactor: for restructuring, test: for tests and chore: for tooling.
+Optional scopes are welcome, for example fix(figma): correct nested frame placement.

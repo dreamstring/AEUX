@@ -35,23 +35,16 @@ Maintained by [Dring Qian / dreamstring](https://github.com/dreamstring), based 
 3. 在资源管理器地址栏粘贴：
 
    ~~~text
-   %APPDATA%\Adobe\CEP\extensions
+   %CommonProgramFiles(x86)%\Adobe\CEP\extensions
    ~~~
 
    目录不存在时新建。把压缩包中的 **CEP/AEUX** 整个文件夹复制进去。最终应是：
 
    ~~~text
-   %APPDATA%\Adobe\CEP\extensions\AEUX\CSXS\manifest.xml
+   %CommonProgramFiles(x86)%\Adobe\CEP\extensions\AEUX\CSXS\manifest.xml
    ~~~
 
-   也可使用系统目录（通常需要管理员权限）：
-
-   ~~~text
-   %CommonProgramFiles(x86)%\Adobe\CEP\extensions
-   ~~~
-
-4. 这是未签名的 CEP 文件夹发行版。如果面板不出现，按照 [Adobe 的调试说明](https://github.com/Adobe-CEP/Getting-Started-guides/blob/master/Client-side%20Debugging/readme.md)，为 AE 使用的 CSXS 版本启用 PlayerDebugMode。注册表位置为 HKCU\Software\Adobe\CSXS.<版本>，字符串值 PlayerDebugMode = 1。CSXS 版本不是 AE 年份，不要直接照年份填写。
-5. 启动 AE，在 **窗口 → 扩展（旧版）/ 扩展 → AEUX** 打开。按需启用 AE 首选项中“允许脚本写入文件和访问网络”。
+   复制时若系统提示需要管理员权限，允许后继续。
 
 ### 导入 Figma 插件
 
@@ -92,10 +85,8 @@ Editable layers are preferred. Clipping, masks and isolation can require precomp
 
 1. Download **AEUX-1.0.0.zip** from [Releases](https://github.com/dreamstring/AEUX/releases/tag/v1.0.0). Extract it, save your project and quit AE.
 2. Back up and move any previous AEUX extension outside CEP extension directories.
-3. Paste **%APPDATA%\Adobe\CEP\extensions** into File Explorer. Create it if necessary. Copy the complete **CEP/AEUX** directory there. The resulting file must be **%APPDATA%\Adobe\CEP\extensions\AEUX\CSXS\manifest.xml**.
-4. Alternative system-wide directory: **%CommonProgramFiles(x86)%\Adobe\CEP\extensions** (administrator permission usually required). Use only one installation location.
-5. This is an unsigned folder distribution. If hidden, enable PlayerDebugMode for the CSXS runtime used by your AE version, following [Adobe's instructions](https://github.com/Adobe-CEP/Getting-Started-guides/blob/master/Client-side%20Debugging/readme.md). Do not confuse CSXS runtime numbers with AE release years.
-6. Start AE and open **Window → Extensions (Legacy) / Extensions → AEUX**. Enable script file/network access in AE preferences if required.
+3. Paste **%CommonProgramFiles(x86)%\Adobe\CEP\extensions** into File Explorer. Create it if necessary. Copy the complete **CEP/AEUX** directory there. The resulting file must be **%CommonProgramFiles(x86)%\Adobe\CEP\extensions\AEUX\CSXS\manifest.xml**.
+Copying to this system-wide directory may require administrator permission.
 
 ### Figma installation and use
 
