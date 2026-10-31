@@ -151,7 +151,7 @@
                 @click.alt.native="openConfig">
                 Learn stuff
             </Button>
-            <div style="font-size:11px;opacity:.55;padding:12px 0">v1.0.1</div>
+            <div style="font-size:11px;opacity:.55;padding:12px 0">v1.0.2</div>
         </Fold>
         <Footer :footerMessage.sync="footerMessage" />
     </Wrapper>
