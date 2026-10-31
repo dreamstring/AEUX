@@ -1,23 +1,24 @@
-# AEUX maintenance roadmap
+# AEUX reproducible build checkpoint
 
-Maintainer: [Dring Qian / dreamstring](https://github.com/dreamstring).
-Based on google/AEUX commit 573d07d. Preserve Apache 2.0 and original credits.
+Accepted reference: published v1.0.2. The tag and published ZIP remain unchanged.
 
-- [x] Create public fork and local maintenance branch.
-- [x] Remove Sketch distribution.
-- [ ] Remove active Sketch-specific converter paths.
-- [ ] Port verified Figma and CEP fixes into reproducible source builds.
-- [ ] Version both applications 1.0.0 with clear fork identity.
-- [ ] Default to editable layers, without arithmetic blend helper forests.
-- [ ] Preserve necessary clipping, masks and isolation only.
-- [ ] Test transforms, raster bounds, text, blur, shadows, masks and paint order.
-- [ ] Inspect recursive output hierarchy, not only flattened screenshots.
-- [ ] Package paired distributables and scan for private data and machine paths.
+- [x] Freeze the accepted archive SHA-256 and all 3,663 installed-file hashes.
+- [x] Vendor the frozen frontend and pinned CEP runtime dependencies.
+- [x] Check in exporter, geometry, appearance, mask, shadow, typography and CEP repair sources used by the maintained build.
+- [x] Regenerate browser repair slots, raster export helpers, CEP interception and AE host from checked-in sources.
+- [x] Provide offline build and packaging commands with Node.js built-ins only.
+- [x] Match all installed files byte for byte to accepted 1.0.2.
+- [x] Build twice and verify deterministic ZIP output and extraction roundtrip.
+- [x] Validate a clean checkout without local work folders or installed apps.
 
-Do not modify installed CEP or operate AE while the maintainer uses it.
-The maintainer has designated the currently accepted local feature set as 1.0.0.
-The unchecked items above track repository synchronization, packaging and future
-maintenance; they do not prevent that version designation. The repository app
-sources are not yet synchronized with the accepted local package.
-Font substitution and Overlay fill/stroke edges remain regression cases. Private
-test results do not establish universal compatibility.
+## Separate future migration
+
+- [ ] Replace frozen compiled legacy frontend dependencies with full Vue/TypeScript source builds.
+- [ ] Remove obsolete upstream source paths after their replacements are verified.
+- [ ] Decompose the larger protocol rule module while preserving this baseline.
+
+The frozen dependency is intentional and documented in vendor/README.md. A new
+build can be produced entirely from the repository without the original author's
+machine. This does not mean every historical compiled dependency has been
+reimplemented from source. Offline file identity establishes parity with the
+accepted release, not new host-version, font or visual compatibility.

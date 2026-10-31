@@ -1,0 +1,24 @@
+{
+  "archive": "aeux-1.0.2-runtime.zip",
+  "sha256": "c4601b9554bc62a7c703973e4302a2be36e861c96fa2993719d444bcbba33f82",
+  "packages": [
+    {
+      "name": "ag-psd",
+      "version": "34.1.0",
+      "manifest": "CEP/AEUX/dist/alignment/node_modules/ag-psd/package.json",
+      "manifestSha256": "63ea2d61b3f84a24b0d745c6f3528b3db2e74c696276e4ee3a07382cd422837b"
+    },
+    {
+      "name": "base64-js",
+      "version": "1.5.1",
+      "manifest": "CEP/AEUX/dist/alignment/node_modules/base64-js/package.json",
+      "manifestSha256": "9758f3ab8c45e07bb9a368e32f9a8b3729623bbf47cbbb205b32d674ab2a91f0"
+    },
+    {
+      "name": "pako",
+      "version": "2.1.0",
+      "manifest": "CEP/AEUX/dist/alignment/node_modules/pako/package.json",
+      "manifestSha256": "268f53a4c305b7b49a63f7aadcdc026b00574fafc5fd6a452351bac21d5417ae"
+    }
+  ]
+}

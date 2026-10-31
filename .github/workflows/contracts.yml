@@ -1,13 +1,16 @@
-name: Core contracts
+name: Offline build and baseline parity
 on: [push, pull_request]
 permissions:
   contents: read
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  verify:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
-      - run: npm test
+          node-version: '22.3.0'
+      - run: npm run check

@@ -96,7 +96,11 @@ Open the AEUX panel in AE, select **New Comp** or **Current**, then select a fra
 
 ## Development / 开发
 
-The downloadable release contains the paired runtime package. Repository app-source synchronization and fully reproducible source builds remain tracked in [GOAL.md](GOAL.md); GitHub's automatic “Source code” download is not the installable plugin package. Run npm test for portable core contracts. Desktop validation has focused on Windows AE 23.5 and Figma 126.10.7; other host versions require testing.
+统一离线构建与打包：Node.js 22（推荐 22.3.0），运行 npm run build。无需启动 Figma／AE，也无需安装构建依赖。npm run check 执行回归测试、1.0.2 全文件字节对照和两次 ZIP 可复现检查。详见 [BUILD.md](BUILD.md)。
+
+Build the paired package offline with Node.js 22 (22.3.0 recommended): npm run build. No Figma, AE or dependency installation is required. Run npm run check for regression tests, complete 1.0.2 file parity and repeated ZIP reproducibility. See [BUILD.md](BUILD.md).
+
+The legacy compiled frontend and pinned runtime dependencies are vendored inputs; repair modules and the AE host are regenerated from maintained source. This is reproducible runtime assembly, not yet a full recompilation of every legacy Vue/TypeScript frontend module. Tested desktop workflows focus on Windows AE 23.5 and Figma 126.10.7; other host versions require testing.
 
 ## License / 许可证
 

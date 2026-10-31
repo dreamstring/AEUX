@@ -9,3 +9,5 @@ function aeuxDecomposeContainerMatrix(m,flip){
  var sign=flip&&flip[0]<0?-1:1,sx=sign*x,sy=(a*d-b*c)/sx;
  return {rotation:Math.atan2(b/sx,a/sx)*180/Math.PI,flip:[sx*100,sy*100]};
 }
+
+if(typeof module!=='undefined')module.exports={aeuxDecomposeContainerMatrix};

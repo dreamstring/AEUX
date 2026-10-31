@@ -4,7 +4,12 @@
   "description": "Transfer Figma layers to editable After Effects layers",
   "main": "index.js",
   "scripts": {
-    "test": "node tests/core/check-geometry.cjs && node tests/core/check-appearance.cjs && node tests/core/check-typography.cjs && node tests/core/check-null-raster-bounds.cjs && node tests/core/check-container-transform.cjs"
+    "test": "node tests/core/check-geometry.cjs && node tests/core/check-appearance.cjs && node tests/core/check-typography.cjs && node tests/core/check-null-raster-bounds.cjs && node tests/core/check-container-transform.cjs && node tests/build/check-archive.cjs",
+    "build": "node scripts/build.cjs",
+    "package": "node scripts/build.cjs",
+    "verify:baseline": "node scripts/build.cjs --verify",
+    "verify:repro": "node scripts/verify-repro.cjs",
+    "check": "npm test && npm run verify:baseline && npm run verify:repro"
   },
   "repository": {
     "type": "git",
@@ -21,5 +26,8 @@
   },
   "contributors": [
     "Adam Plouff (original AEUX)"
-  ]
+  ],
+  "engines": {
+    "node": ">=22"
+  }
 }

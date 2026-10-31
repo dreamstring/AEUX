@@ -1,0 +1,8 @@
+# Preserve exact source/template bytes for the frozen runtime comparison.
+/packages/** -text
+/build/** -text
+/vendor/** -text
+*.png -text
+*.zip -text
+# Frozen template whitespace is part of the byte-for-byte reference.
+/build/templates/** whitespace=-blank-at-eol,cr-at-eol
