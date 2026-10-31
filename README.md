@@ -4,7 +4,7 @@
 
 [中文](#中文) · [English](#english) · [Download / 下载](https://github.com/dreamstring/AEUX/releases/tag/v1.0.0)
 
-Maintained by [Dring Qian / dreamstring](https://github.com/dreamstring), based on AEUX by Adam Plouff and upstream contributors. Independent community fork; not an official Google or Adobe product. Apache 2.0.
+Maintained by [Dring Qian / dreamstring](https://github.com/dreamstring), based on [AEUX by Adam Plouff and upstream contributors](https://github.com/google/AEUX). Independent community fork; not an official Google or Adobe product. Apache 2.0.
 
 ## 中文
 
