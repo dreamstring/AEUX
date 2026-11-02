@@ -1,0 +1,5 @@
+{
+  "version": "1.0.3",
+  "revision": "rasterize-toggle-undo",
+  "notes": "Figma 导入 AE 插件。新增图片填充文字的可编辑导入：文字 Alpha 遮罩＋独立纹理层。\n\n本次修复：Rasterize layer on export 可再次点击取消，并提交独立撤销记录。保持版本 1.0.3，下载下方 AEUX-1.0.3.zip。\n\nFigma to After Effects. Editable image-filled text uses native text as an Alpha matte for a separate texture layer.\n\nUpdated 1.0.3: Rasterize layer on export now toggles off and commits separate undo checkpoints. Download AEUX-1.0.3.zip below. Texture coverage remains within the original text frame; complex appearances retain existing fallbacks."
+}
