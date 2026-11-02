@@ -1,0 +1,25 @@
+name: Publish paired release
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/release-request.json]
+permissions:
+  contents: write
+concurrency:
+  group: paired-release
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.3.0'
+      - run: npm run check
+      - name: Publish and verify ZIP
+        run: node scripts/publish-release.cjs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
