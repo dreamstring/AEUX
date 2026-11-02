@@ -4,7 +4,7 @@
   "description": "Transfer Figma layers to editable After Effects layers",
   "main": "index.js",
   "scripts": {
-    "test": "node tests/core/check-geometry.cjs && node tests/core/check-appearance.cjs && node tests/core/check-typography.cjs && node tests/core/check-null-raster-bounds.cjs && node tests/core/check-container-transform.cjs && node tests/build/check-archive.cjs && node tests/core/check-image-text.cjs",
+    "test": "node tests/core/check-geometry.cjs && node tests/core/check-appearance.cjs && node tests/core/check-typography.cjs && node tests/core/check-null-raster-bounds.cjs && node tests/core/check-container-transform.cjs && node tests/build/check-archive.cjs && node tests/core/check-image-text.cjs && node tests/core/check-rasterize-toggle.cjs",
     "build": "node scripts/build.cjs",
     "build:image-text": "node scripts/build-image-text.cjs",
     "test:image-text": "node tests/core/check-image-text.cjs",

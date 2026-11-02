@@ -63,7 +63,9 @@ if(!process.argv.includes('--frozen')){
   if(name.endsWith('.html'))source+='\n<script>'+read('packages/figma-export/image-text-preflight.js')+'</script>';
   fs.writeFileSync(p,source);
  }
- const code=path.join(tree,'Figma/dist/code.js');fs.writeFileSync(code,patchImageTextCode(fs.readFileSync(code,'utf8')));
+ const code=path.join(tree,'Figma/dist/code.js');
+ const {patchRasterizeToggle}=require('./rasterize-toggle.cjs');
+ fs.writeFileSync(code,patchRasterizeToggle(patchImageTextCode(fs.readFileSync(code,'utf8'))));
  const hostFile=path.join(tree,hostPath);fs.writeFileSync(hostFile,patchImageTextHost(fs.readFileSync(hostFile,'utf8')));
  // Update runtime identity and paired package metadata without touching the frozen dependency.
  for(const file of files(tree)){
